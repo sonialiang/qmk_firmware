@@ -6,6 +6,7 @@
 *.elf
 *.hex
 !jj40_liang*.hex
+!jj40_sonialiang*.hex
 *.qmk
 !util/bootloader.hex
 !quantum/tools/eeprom_reset.hex
