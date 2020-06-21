@@ -9,11 +9,12 @@ enum jj40_layers {
   _FUNC
 };
 
-#define LOWER  TG(_LOWER)
+#define LOWER  TT(_LOWER)
 #define WINMAP TO(_WINMAP)
 #define WINSYM TO(_WINSYM)
 #define QWERTY TO(_QWERTY)
-#define TRAISE TO(_RAISE)
+#define TORAISE TO(_RAISE)
+#define XRAISE  LT(_RAISE,KC_LANG1)
 #define JP_GRV  S(KC_LBRC)
 #define JP_PERC S(KC_5) // %
 #define JP_ASTR S(KC_QUOT) // *
@@ -28,7 +29,7 @@ enum {
   TT_QUO,
   TT_CLN,
   TT_JCLN,
-  TT_OEQL,
+  TT_LEQL,
 };
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TT_JLINE] = ACTION_TAP_DANCE_DOUBLE(JP_UNDS, KC_MINS),
@@ -36,27 +37,27 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TT_QUO]  = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_DQUO),
     [TT_CLN]  = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLON),
     [TT_JCLN]  = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_QUOT),
-    [TT_OEQL] = ACTION_TAP_DANCE_DOUBLE(KC_O, KC_EQL),
+    [TT_LEQL] = ACTION_TAP_DANCE_DOUBLE(KC_L, KC_EQL),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Qwerty
  * ,-----------------------------------------------------------------------------------.
- * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O= |  P   | Bksp |
+ * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |  P   | Bksp |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | CTRL |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |  ;:  |Enter |
+ * | CTRL |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |  L=  |  ;:  |Enter |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |  B   |   N  |   M  |  ,<  |  .>  |  UP  | /?   |
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |  ,<  |  .>  |  UP  | /?   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | CMD  | Opt  | Tab  | FUNC | Lower| SPC  |WIN10  |Raise |  -   | LEFT | DOWN |RIGHT|
  * |      |      |      | Esisu|      |      |       |Kana  |  _   |      |      |     |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_ortho_4x12( \
-  KC_ESC,  KC_Q,    KC_W, KC_E, KC_R,   KC_T, KC_Y,   KC_U, KC_I,  TD(TT_OEQL), KC_P, KC_BSPC,  \
-  KC_LCTL, KC_A,    KC_S, KC_D, KC_F,   KC_G, KC_H,   KC_J, KC_K,    KC_L,  TD(TT_CLN),  KC_ENT,  \
-  KC_LSFT, KC_Z,    KC_X, KC_C, KC_V,   KC_B, KC_N,   KC_M, KC_COMM,  KC_DOT,  KC_UP, KC_SLSH,  \
-  KC_LGUI, KC_LALT, KC_TAB, LT(_FUNC, KC_LANG2), LOWER, KC_SPC, WINMAP, LT(_RAISE,KC_LANG1),  TD(TT_LINE), KC_LEFT,KC_DOWN, KC_RIGHT  \
+  KC_ESC,  KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC,  \
+  KC_LCTL, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, TD(TT_LEQL), TD(TT_CLN), KC_ENT,  \
+  KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_UP, KC_SLSH,  \
+  KC_LGUI, KC_LALT, KC_TAB, LT(_FUNC, KC_LANG2), LOWER, KC_SPC, WINMAP, XRAISE,  TD(TT_LINE), KC_LEFT,KC_DOWN, KC_RIGHT  \
 ),
 /* Lower
  * ,-----------------------------------------------------------------------------------.
@@ -70,9 +71,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_ortho_4x12( \
-  KC_TILD, KC_EXLM,   KC_AT,  KC_HASH,      KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC, \
+  KC_TILD, KC_EXLM,   KC_AT,  KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC, \
   KC_LCTL,   KC_F1,   KC_F2,    KC_F3, KC_F4, KC_F5, KC_F6, KC_MINS, KC_PLUS, KC_LCBR, KC_RCBR,  KC_ENT, \
-  KC_LSFT,   KC_F7,   KC_F8,    KC_F9,      KC_F10,   KC_F11,  KC_F12, _______, KC_QUOT, KC_DQUO, TD(TT_QUO), KC_PGUP, \
+  KC_LSFT,   KC_F7,   KC_F8,    KC_F9, KC_F10,   KC_F11,  KC_F12, _______, KC_QUOT, KC_DQUO, TD(TT_QUO), KC_PGUP, \
   KC_LGUI, KC_LALT, KC_ESC,  _______, _______,  _______, _______, KC_PIPE, KC_UNDS, KC_LEFT, KC_RIGHT, KC_PGDN \
 ),
 /* Raise
@@ -108,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_ESC,  KC_Q,    KC_W, KC_E, KC_R,   KC_T, KC_Y,   KC_U, KC_I,KC_O, KC_P,  KC_BSPC,  \
   KC_LGUI, KC_A,    KC_S, KC_D, KC_F,   KC_G, KC_H,   KC_J, KC_K,    KC_L,  TD(TT_JCLN), KC_ENT,  \
   KC_LSFT, KC_Z,    KC_X, KC_C, KC_V,   KC_B, KC_N,   KC_M, KC_COMM,  KC_DOT,  KC_UP, KC_SLSH,  \
-  KC_LCTL, KC_LALT, KC_TAB, MO(_FUNC), WINSYM, KC_SPC, QWERTY, TRAISE, KC_ZKHK, KC_LEFT, KC_DOWN, KC_RIGHT  \
+  KC_LCTL, KC_LALT, KC_TAB, MO(_FUNC), WINSYM, KC_SPC, QWERTY, TORAISE, KC_ZKHK, KC_LEFT, KC_DOWN, KC_RIGHT  \
 ),
 /* WINJP_SYM
  * ,-------------------------------------------------------------------------------------.
@@ -116,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+-------+------+-------------+-------+------+------+------+------|
  * |   `  |  A   | LEFT | RIGHT | PgUp | PgDn |  -   |   =   |   +  |   {  |   }  |Enter |
  * |------+------+------+-------+------+------|------+-------+------+------+------+------|
- * | Shift|  Z   |  X   |   C   |  V   |  Â¥   |   [  |   ]   |   '  |  "   |  UP  |  \   |
+ * | Shift|  Z   |  X   |   C   |  V   |  Â¥  |   [  |   ]   |   '  |   "  |  UP  |  \   |
  * |------+------+------+-------+------+------+------+-------+------+------+------+------|
  * | CTRL | Opt  | Tab  |  WIN  |WINMAP| SPC  |QWERTY|   |   |  _-  | LEFT | DOWN |RIGHT |
  * `-------------------------------------------------------------------------------------'
@@ -177,17 +178,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return true;
     case WINMAP:
-      if (record->event.pressed) {
-        rgblight_enable();
-        rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
-        rgblight_setrgb_at(RGB_AZURE, 0);
-        rgblight_setrgb_at(RGB_AZURE, 1);
-        rgblight_setrgb_at(RGB_AZURE, 2);
-        rgblight_setrgb_at(RGB_AZURE, 3);
-      }
+      rgblight_enable();
+      rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
+      rgblight_setrgb_at(RGB_AZURE, 0);
+      rgblight_setrgb_at(RGB_AZURE, 1);
+      rgblight_setrgb_at(RGB_AZURE, 2);
+      rgblight_setrgb_at(RGB_AZURE, 3);
       return true;
-    case TRAISE:
-      if (record->event.pressed) {
+    case TORAISE:
+      rgblight_enable();
+      rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
+      rgblight_setrgb_at(RGB_RED, 0);
+      rgblight_setrgb_at(RGB_RED, 1);
+      rgblight_setrgb_at(RGB_RED, 2);
+      rgblight_setrgb_at(RGB_RED, 3);
+      return true;
+    case XRAISE:
+      if (layer_state_is(_RAISE)) {
+        rgblight_disable();
+      } else {
         rgblight_enable();
         rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
         rgblight_setrgb_at(RGB_RED, 0);
@@ -197,9 +206,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return true;
     case WINSYM:
-      if (record->event.pressed) {
-        rgblight_mode(RGBLIGHT_MODE_KNIGHT);
-      }
+      rgblight_enable();
+      rgblight_setrgb(120, 155, 15);
       return true;
     default:
       return true;
