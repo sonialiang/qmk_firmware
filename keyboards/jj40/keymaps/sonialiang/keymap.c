@@ -9,10 +9,10 @@ enum jj40_layers {
   _FUNC
 };
 
-#define LOWER  TT(_LOWER)
-#define WINMAP TO(_WINMAP)
-#define WINSYM TO(_WINSYM)
-#define QWERTY TO(_QWERTY)
+#define LOWER   TT(_LOWER)
+#define WINMAP  TO(_WINMAP)
+#define WINSYM  TO(_WINSYM)
+#define QWERTY  TO(_QWERTY)
 #define TORAISE TO(_RAISE)
 #define XRAISE  LT(_RAISE,KC_LANG1)
 #define JP_GRV  S(KC_LBRC)
@@ -29,15 +29,13 @@ enum {
   TT_QUO,
   TT_CLN,
   TT_JCLN,
-  TT_LEQL,
 };
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TT_JLINE] = ACTION_TAP_DANCE_DOUBLE(JP_UNDS, KC_MINS),
-    [TT_LINE] = ACTION_TAP_DANCE_DOUBLE(KC_UNDS, KC_MINS),
-    [TT_QUO]  = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_DQUO),
-    [TT_CLN]  = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLON),
-    [TT_JCLN]  = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_QUOT),
-    [TT_LEQL] = ACTION_TAP_DANCE_DOUBLE(KC_L, KC_EQL),
+  [TT_JLINE] = ACTION_TAP_DANCE_DOUBLE(JP_UNDS, KC_MINS),
+  [TT_LINE]  = ACTION_TAP_DANCE_DOUBLE(KC_UNDS, KC_MINS),
+  [TT_QUO]   = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_DQUO),
+  [TT_CLN]   = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLON),
+  [TT_JCLN]  = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_QUOT),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -45,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |  P   | Bksp |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | CTRL |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |  L=  |  ;:  |Enter |
+ * | CTRL |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |  ;:  |Enter |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |  ,<  |  .>  |  UP  | /?   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -54,16 +52,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_ortho_4x12( \
-  KC_ESC,  KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC,  \
-  KC_LCTL, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, TD(TT_LEQL), TD(TT_CLN), KC_ENT,  \
-  KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_UP, KC_SLSH,  \
-  KC_LGUI, KC_LALT, KC_TAB, LT(_FUNC, KC_LANG2), LOWER, KC_SPC, WINMAP, XRAISE,  TD(TT_LINE), KC_LEFT,KC_DOWN, KC_RIGHT  \
+  KC_ESC,    KC_Q,    KC_W,                KC_E,  KC_R,   KC_T,   KC_Y,   KC_U,         KC_I,   KC_O,      KC_P, KC_BSPC,  \
+  KC_LCTL,   KC_A,    KC_S,                KC_D,  KC_F,   KC_G,   KC_H,   KC_J,         KC_K,    KC_L, TD(TT_CLN), KC_ENT,  \
+  KC_LSFT,   KC_Z,    KC_X,                KC_C,  KC_V,   KC_B,   KC_N,   KC_M,      KC_COMM,  KC_DOT,      KC_UP, KC_SLSH,  \
+  KC_LGUI, KC_LALT, KC_TAB, LT(_FUNC, KC_LANG2), LOWER, KC_SPC, WINMAP, XRAISE,  TD(TT_LINE), KC_LEFT,    KC_DOWN, KC_RIGHT  \
 ),
 /* Lower
  * ,-----------------------------------------------------------------------------------.
  * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  | Bksp |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | CTRL |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  -   |   +  |   {  |   }  |Enter |
+ * | CTRL |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  =   |   +  |   {  |   }  |Enter |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | SHIFT|  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |      |   '  |  "   |  "'  | PgUp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -71,10 +69,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_ortho_4x12( \
-  KC_TILD, KC_EXLM,   KC_AT,  KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC, \
-  KC_LCTL,   KC_F1,   KC_F2,    KC_F3, KC_F4, KC_F5, KC_F6, KC_MINS, KC_PLUS, KC_LCBR, KC_RCBR,  KC_ENT, \
-  KC_LSFT,   KC_F7,   KC_F8,    KC_F9, KC_F10,   KC_F11,  KC_F12, _______, KC_QUOT, KC_DQUO, TD(TT_QUO), KC_PGUP, \
-  KC_LGUI, KC_LALT, KC_ESC,  _______, _______,  _______, _______, KC_PIPE, KC_UNDS, KC_LEFT, KC_RIGHT, KC_PGDN \
+  KC_TILD, KC_EXLM,   KC_AT,  KC_HASH,  KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN,   KC_RPRN,  KC_BSPC, \
+  KC_LCTL,   KC_F1,   KC_F2,    KC_F3,   KC_F4,    KC_F5,   KC_F6,  KC_EQL, KC_PLUS, KC_LCBR,   KC_RCBR,  KC_ENT, \
+  KC_LSFT,   KC_F7,   KC_F8,    KC_F9,  KC_F10,   KC_F11,  KC_F12, KC_MINS, KC_QUOT, KC_DQUO, TD(TT_QUO), KC_PGUP, \
+  KC_LGUI, KC_LALT,  KC_ESC,  _______, _______,  _______, _______, KC_PIPE, KC_UNDS, KC_LEFT,   KC_RIGHT, KC_PGDN \
 ),
 /* Raise
  * ,-----------------------------------------------------------------------------------.
