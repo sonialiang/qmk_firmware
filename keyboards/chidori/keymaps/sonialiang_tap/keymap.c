@@ -31,7 +31,7 @@ enum {
   TT_CLN,
 };
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [TT_JLINE] = ACTION_TAP_DANCE_DOUBLE(JP_UNDS, KC_MINS),
+  [TT_LINE]  = ACTION_TAP_DANCE_DOUBLE(JP_UNDS, KC_MINS),
   [TT_CLN]   = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLON),
 };
 
@@ -49,9 +49,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `-----------------------------------------'             `-----------------------------------------'
    */
     [_QWERTY] = LAYOUT(
-      KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                KC_H,    KC_J,    KC_K,    KC_L,    TD(TT_CLN), KC_ENT,
-      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_UP, KC_SLSH,
+      KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                              KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                              KC_H,    KC_J,    KC_K,    KC_L,    TD(TT_CLN), KC_ENT,
+      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                              KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_UP, KC_SLSH,
       KC_LGUI,  KC_LALT,  KC_TAB, LT(KC_LANG1, KC_LANG2), LOWER,   KC_SPC,            KC_SPC,  RAISE,   TD(TT_LINE), KC_LEFT, KC_DOWN,   KC_RGHT
     ),
 
@@ -75,13 +75,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* Raise
    * ,-----------------------------------------.             ,-----------------------------------------.
-   * |   `  |   1  |   2  |   3  |   4  |   5  |             |   6  |   7  |   8  |   9  |   0  | Del  |
+   * |   `  |   1  |   2  |   3  |   4  |   5  |             |   6  |   7  |   8  |   9  |   0  | Bksp |
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |  F1  |  F2  |  F3  |  F4  |  F5  |             |  F6  |   -  |   =  |   [  |   ]  |Enter |
+   * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |             |  F6  |   -  |   =  |   [  |   ]  |Enter |
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |  F7  |  F8  |  F9  |  F10 |  F11 |             |  F12 |      |   '  |  "   |  :   |   \  |
+   * |SHIFT |  F7  |  F8  |  F9  |  F10 |  F11 |             |  F12 |      |   '  |  "   |  :   |   \  |
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      | Opt  |      |      |      |      |             |      |      | Next | Vol- | Vol+ | Play |
+   * | CMD  | Opt  |      |      |      |      |             |      |      | Next | Vol- | Vol+ | Play |
    * `-----------------------------------------'             `-----------------------------------------'
    */
     [_RAISE] = LAYOUT(
