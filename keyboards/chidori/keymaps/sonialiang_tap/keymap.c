@@ -21,7 +21,9 @@ enum layer_number { _QWERTY = 0, _LOWER, _RAISE, _ADJUST };
 
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes { QWERTY = SAFE_RANGE };
+#define JP_UNDS S(KC_RO) // _
 
+#define QWERTY  MO(_QWERTY)
 #define LOWER  MO(_LOWER)
 #define RAISE  MO(_RAISE)
 #define ADJUST MO(_ADJUST)
@@ -29,10 +31,35 @@ enum custom_keycodes { QWERTY = SAFE_RANGE };
 enum {
   TT_LINE,
   TT_CLN,
+  TT_QUO,
+  TD_EMAIL,
+  TD_IME,
 };
+
+/* tap dance time */
+void tdemail(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count >= 2) {
+    SEND_STRING("liang.yunghsin@zuuonline.com");
+  } else {
+    SEND_STRING("bingo605@gmail.com");
+  }
+  reset_tap_dance (state);
+}
+void tdime(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count >= 2) {
+    tap_code(KC_LANG1);
+  } else {
+    tap_code(KC_LANG2);
+  }
+  reset_tap_dance (state);
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
   [TT_LINE]  = ACTION_TAP_DANCE_DOUBLE(JP_UNDS, KC_MINS),
   [TT_CLN]   = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLON),
+  [TT_QUO]   = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_DQUO),
+  [TD_EMAIL] = ACTION_TAP_DANCE_FN(tdemail),
+  [TD_IME]   = ACTION_TAP_DANCE_FN(tdime),
 };
 
 // clang-format off
@@ -49,10 +76,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `-----------------------------------------'             `-----------------------------------------'
    */
     [_QWERTY] = LAYOUT(
-      KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                              KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                              KC_H,    KC_J,    KC_K,    KC_L,    TD(TT_CLN), KC_ENT,
-      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                              KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_UP, KC_SLSH,
-      KC_LGUI,  KC_LALT,  KC_TAB, LT(KC_LANG1, KC_LANG2), LOWER,   KC_SPC,            KC_SPC,  RAISE,   TD(TT_LINE), KC_LEFT, KC_DOWN,   KC_RGHT
+      KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                    KC_H,    KC_J,    KC_K,    KC_L,    TD(TT_CLN), KC_ENT,
+      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_UP, KC_SLSH,
+      KC_LGUI,  KC_LALT,  KC_TAB, TD(TD_IME), LOWER,   KC_SPC,            KC_SPC,  RAISE,   TD(TT_LINE), KC_LEFT, KC_DOWN,   KC_RGHT
     ),
 
   /* Lower
@@ -69,8 +96,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_LOWER] = LAYOUT(
       KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,           KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
       KC_LCTL,   KC_F1,  KC_F2,    KC_F3,  KC_F4,    KC_F5,           KC_F6, KC_EQL, KC_PLUS, KC_LCBR, KC_RCBR, KC_ENT,
-      KC_LSFT,   KC_F7,  KC_F8,    KC_F9,  KC_F10,   KC_F11,          KC_F12, KC_PIPE, KC_QUOT, KC_DQUO, KC_SCLN, KC_PGUP,
-      KC_LGUI, KC_LALT, KC_ESC, _______, _______, _______,           _______, _______, KC_UNDS, KC_LEFT, KC_RIGHT, KC_PGDN
+      KC_LSFT,   KC_F7,  KC_F8,    KC_F9,  KC_F10,   KC_F11,          KC_F12, KC_PIPE, KC_QUOT, KC_DQUO, TD(TT_QUO), KC_PGUP,
+      KC_LGUI, KC_LALT, KC_ESC, TD(TD_EMAIL), _______, _______,           _______, _______, KC_UNDS, KC_LEFT, KC_RIGHT, KC_PGDN
     ),
 
   /* Raise
@@ -87,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RAISE] = LAYOUT(
       KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,              KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
       KC_DEL, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,             KC_F6,   KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_ENT,
-      KC_LSFT, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,            KC_F12,  _______, KC_QUOT,  KC_DQUO, KC_COLON, KC_BSLS,
+      KC_LSFT, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,            KC_F12,  KC_UNDS, KC_QUOT,  KC_DQUO, KC_COLON, KC_BSLS,
       KC_LGUI, KC_LALT, _______, _______, _______, _______,           _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
     ),
 
